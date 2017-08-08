@@ -179,7 +179,9 @@ return [
 
         Laravel\Passport\PassportServiceProvider::class,
 
-        Dingo\Api\Provider\LaravelServiceProvider::class
+        Dingo\Api\Provider\LaravelServiceProvider::class,
+        App\Providers\ApiServiceProvider::class,
+
     ],
 
     /*
