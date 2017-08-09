@@ -183,6 +183,8 @@ return [
         App\Providers\ApiServiceProvider::class,
 
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        App\Providers\RepositoryCommandServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
     ],
 
