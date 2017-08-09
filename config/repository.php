@@ -231,6 +231,7 @@ return [
         'stubsOverridePath' => app_path(),
         'paths'         => [
             'models'       => 'Models',
+            'criteria'     => 'Repositories/Criteria',
             'repositories' => 'Repositories/Eloquent',
             'interfaces'   => 'Repositories/Interfaces',
             'transformers' => 'Transformers',
@@ -238,7 +239,6 @@ return [
             'validators'   => 'Validators',
             'controllers'  => 'Api/Controllers',
             'provider'     => 'RepositoryServiceProvider',
-            'criteria'     => 'Criteria'
         ]
     ]
 ];
