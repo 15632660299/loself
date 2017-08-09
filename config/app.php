@@ -182,6 +182,8 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
         App\Providers\ApiServiceProvider::class,
 
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
     ],
 
     /*
