@@ -2,15 +2,17 @@
 
 namespace App\Api\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\Interfaces\UserRepository;
 use App\Validators\UserValidator;
+use Dingo\Api\Exception\DeleteResourceFailedException;
+use Dingo\Api\Exception\StoreResourceFailedException;
+use Dingo\Api\Exception\UpdateResourceFailedException;
+use Illuminate\Http\Request;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
+
 
 
 class UsersController extends BaseController
@@ -32,12 +34,6 @@ class UsersController extends BaseController
         $this->validator  = $validator;
     }
 
-    public function me()
-    {
-        $user_id = \Auth::user()->getKey();
-        return $this->repository->find($user_id);
-    }
-
 
     /**
      * Display a listing of the resource.
@@ -54,38 +50,20 @@ class UsersController extends BaseController
      *
      * @param  UserCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Dingo\Api\Http\Response
      */
     public function store(UserCreateRequest $request)
     {
+        $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-        try {
+        $user = $this->repository->create($request->all());
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        // throw exception if create failed
+//        throw new StoreResourceFailedException('Failed to Create.');
 
-            $user = $this->repository->create($request->all());
+        // Updated, return 201 created
+        return $this->response->created();
 
-            $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 
@@ -94,36 +72,11 @@ class UsersController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function show($id)
     {
-        $user = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $user,
-            ]);
-        }
-
-        return view('users.show', compact('user'));
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-        $user = $this->repository->find($id);
-
-        return view('users.edit', compact('user'));
+        return $this->repository->find($id);
     }
 
 
@@ -133,40 +86,21 @@ class UsersController extends BaseController
      * @param  UserUpdateRequest $request
      * @param  string            $id
      *
-     * @return Response
+     * @return \Dingo\Api\Http\Response
      */
     public function update(UserUpdateRequest $request, $id)
     {
 
-        try {
+        $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        $user = $this->repository->update($request->all(), $id);
 
-            $user = $this->repository->update($request->all(), $id);
+        // throw exception if update failed
+//        throw new UpdateResourceFailedException('Failed to update.');
 
-            $response = [
-                'message' => 'User updated.',
-                'data'    => $user->toArray(),
-            ];
+        // Updated, return 204 No Content
+        return $this->response->noContent();
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 
@@ -175,20 +109,18 @@ class UsersController extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Dingo\Api\Http\Response
      */
     public function destroy($id)
     {
         $deleted = $this->repository->delete($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'User deleted.',
-                'deleted' => $deleted,
-            ]);
+        if ($deleted) {
+            // Deleted, return 204 No Content
+            return $this->response->noContent();
+        } else {
+            // Failed, throw exception
+            throw new DeleteResourceFailedException();
         }
-
-        return redirect()->back()->with('message', 'User deleted.');
     }
 }
