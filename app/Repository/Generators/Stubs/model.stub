@@ -2,13 +2,15 @@
 
 $NAMESPACE$
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Base\BaseUserModel as Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 class $CLASS$ extends Model implements Transformable
 {
     use TransformableTrait;
+
+    protected $primaryKey = 'id';
 
     protected $fillable = $FILLABLE$;
 
