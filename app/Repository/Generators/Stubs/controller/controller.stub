@@ -2,15 +2,17 @@
 
 $NAMESPACE$
 
-use Illuminate\Http\Request;
-
-use $APPNAME$Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use $APPNAME$Http\Requests\$CLASS$CreateRequest;
 use $APPNAME$Http\Requests\$CLASS$UpdateRequest;
 $REPOSITORY$
 $VALIDATOR$
+use Dingo\Api\Exception\DeleteResourceFailedException;
+use Dingo\Api\Exception\StoreResourceFailedException;
+use Dingo\Api\Exception\UpdateResourceFailedException;
+use Illuminate\Http\Request;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
+
 
 
 class $CONTROLLER$Controller extends BaseController
@@ -48,38 +50,20 @@ class $CONTROLLER$Controller extends BaseController
      *
      * @param  $CLASS$CreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Dingo\Api\Http\Response
      */
     public function store($CLASS$CreateRequest $request)
     {
+        $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-        try {
+        $$SINGULAR$ = $this->repository->create($request->all());
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        // throw exception if create failed
+//        throw new StoreResourceFailedException('Failed to Create.');
 
-            $$SINGULAR$ = $this->repository->create($request->all());
+        // Updated, return 201 created
+        return $this->response->created();
 
-            $response = [
-                'message' => '$CLASS$ created.',
-                'data'    => $$SINGULAR$->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 
@@ -88,36 +72,11 @@ class $CONTROLLER$Controller extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function show($id)
     {
-        $$SINGULAR$ = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $$SINGULAR$,
-            ]);
-        }
-
-        return view('$PLURAL$.show', compact('$SINGULAR$'));
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-        $$SINGULAR$ = $this->repository->find($id);
-
-        return view('$PLURAL$.edit', compact('$SINGULAR$'));
+        return $this->repository->find($id);
     }
 
 
@@ -127,40 +86,21 @@ class $CONTROLLER$Controller extends BaseController
      * @param  $CLASS$UpdateRequest $request
      * @param  string            $id
      *
-     * @return Response
+     * @return \Dingo\Api\Http\Response
      */
     public function update($CLASS$UpdateRequest $request, $id)
     {
 
-        try {
+        $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        $$SINGULAR$ = $this->repository->update($request->all(), $id);
 
-            $$SINGULAR$ = $this->repository->update($request->all(), $id);
+        // throw exception if update failed
+//        throw new UpdateResourceFailedException('Failed to update.');
 
-            $response = [
-                'message' => '$CLASS$ updated.',
-                'data'    => $$SINGULAR$->toArray(),
-            ];
+        // Updated, return 204 No Content
+        return $this->response->noContent();
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 
@@ -169,20 +109,18 @@ class $CONTROLLER$Controller extends BaseController
      *
      * @param  int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return \Dingo\Api\Http\Response
      */
     public function destroy($id)
     {
         $deleted = $this->repository->delete($id);
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => '$CLASS$ deleted.',
-                'deleted' => $deleted,
-            ]);
+        if ($deleted) {
+            // Deleted, return 204 No Content
+            return $this->response->noContent();
+        } else {
+            // Failed, throw exception
+            throw new DeleteResourceFailedException();
         }
-
-        return redirect()->back()->with('message', '$CLASS$ deleted.');
     }
 }
