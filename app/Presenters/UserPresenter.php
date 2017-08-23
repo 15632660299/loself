@@ -3,14 +3,13 @@
 namespace App\Presenters;
 
 use App\Transformers\UserTransformer;
-use Prettus\Repository\Presenter\FractalPresenter;
 
 /**
  * Class UserPresenter
  *
  * @package namespace App\Presenters;
  */
-class UserPresenter extends FractalPresenter
+class UserPresenter extends BasePresenter
 {
     /**
      * Transformer
