@@ -4,6 +4,7 @@ namespace App\Api\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Presenters\BasicPresenter;
 use App\Repositories\Interfaces\UserRepository;
 use App\Validators\UserValidator;
 use Dingo\Api\Exception\DeleteResourceFailedException;
@@ -34,6 +35,11 @@ class UsersController extends BaseController
         $this->validator  = $validator;
     }
 
+    public function me()
+    {
+        $user = \Auth::user();
+        return $this->repository->present($user);
+    }
 
     /**
      * Display a listing of the resource.
