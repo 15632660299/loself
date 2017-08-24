@@ -11,6 +11,8 @@ class User extends BaseUserModel implements Transformable
 {
     use HasApiTokens, TransformableTrait;
 
+    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
