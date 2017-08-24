@@ -21,9 +21,6 @@ class BasicTransformer extends TransformerAbstract
      */
     public function transform($data)
     {
-        if ($data instanceof Model) {
-            $data = $data->toArray();
-        }
         return $data;
     }
 }
