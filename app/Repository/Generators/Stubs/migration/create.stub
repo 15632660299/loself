@@ -16,7 +16,8 @@ class $CLASS$ extends Migration
         Schema::create('$TABLE$', function(Blueprint $table) {
             $table->increments('id');
 $FIELDS$
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 
