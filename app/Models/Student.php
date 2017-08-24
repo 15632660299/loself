@@ -12,6 +12,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 class Student extends Model implements Transformable
 {
     use TransformableTrait, SoftDeletes;
+    use belongsToUser;
 
     protected $primaryKey = 'student_id';
 
