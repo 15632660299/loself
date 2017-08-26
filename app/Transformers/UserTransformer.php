@@ -20,7 +20,7 @@ class UserTransformer extends BaseTransformer
     public function transform(User $model)
     {
         return [
-            'user_Id' => (int)$model->getKey(),
+            'user_id' => (int)$model->getKey(),
             'name' => (string)$model->name,
             'email' => (string)$model->email,
             'created_at' => (string)$model->created_at,
