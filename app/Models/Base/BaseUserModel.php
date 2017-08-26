@@ -17,4 +17,15 @@ class BaseUserModel extends BaseModel implements
 {
     use Notifiable;
     use Authenticatable, Authorizable, CanResetPassword;
+
+    /**
+     * Let the passport find the user
+     *
+     * @param $username
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    public function findForPassport($username)
+    {
+        return static::where('name', $username)->orWhere('email', $username)->first();
+    }
 }
