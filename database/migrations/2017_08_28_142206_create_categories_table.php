@@ -19,9 +19,9 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('type');
 
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
