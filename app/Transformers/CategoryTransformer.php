@@ -20,7 +20,7 @@ class CategoryTransformer extends BaseTransformer
     public function transform(Category $model)
     {
         return [
-            'id'         => (int)$model->getKey(),
+            'category_id'         => (int)$model->getKey(),
             'name'         => (string)$model->name,
             'type'         => (string)$model->type,
             'created_at' => (string)$model->created_at,
