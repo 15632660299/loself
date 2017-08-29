@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseUserModel as Model;
+use App\Models\Traits\MorphToManyCategoryTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 class Article extends Model implements Transformable
 {
     use TransformableTrait, SoftDeletes;
+    use MorphToManyCategoryTrait;
 
     protected $primaryKey = 'article_id';
 
@@ -24,7 +26,7 @@ class Article extends Model implements Transformable
         parent::boot();
 
         static::addGlobalScope('published', function (Builder $builder) {
-            $builder->where('published_at', '>=', Carbon::now());
+            $builder->where('published_at', '<=', Carbon::now());
         });
     }
 
