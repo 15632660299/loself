@@ -26,7 +26,7 @@ $factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
 $factory->define(\App\Models\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->paragraph,
-        'type' => collect(['article', 'course'])->random()
+        'type' => collect(['article', 'article_tag'])->random()
     ];
 });
 
