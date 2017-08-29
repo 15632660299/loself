@@ -8,7 +8,7 @@
   * [l5-repository](https://github.com/andersao/l5-repository)
   * [laravel-passport](https://laravel.com/docs/5.4/passport)
 
-`注：为了方便使用，已将l5-repository的make:entity本地化为server:entity,请勿使用make:entity来创建模块`
+注：为了方便使用，已将l5-repository的`make:entity`本地化为`server:entity`,`请勿使用`make:entity来创建模块
 
 ## 框架规范
 框架API遵循`RESTful API`规范，相关路由`必须`遵循此规范
