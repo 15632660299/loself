@@ -10,6 +10,9 @@ use App\Models\Category;
  */
 class CategoryTransformer extends BaseTransformer
 {
+    protected $availableIncludes = [
+        'articles'
+    ];
 
     /**
      * Transform the Category entity
@@ -20,11 +23,20 @@ class CategoryTransformer extends BaseTransformer
     public function transform(Category $model)
     {
         return [
-            'category_id'         => (int)$model->getKey(),
-            'name'         => (string)$model->name,
-            'type'         => (string)$model->type,
+            'category_id' => (int)$model->getKey(),
+            'name' => (string)$model->name,
+            'type' => (string)$model->type,
             'created_at' => (string)$model->created_at,
             'updated_at' => (string)$model->updated_at
         ];
+    }
+
+    public function includeArticles(Category $model)
+    {
+        $articles = $model->getArticles();
+        if ($articles->isNotEmpty()) {
+            return $this->collection($articles, new ArticleTransformer());
+        }
+        return null;
     }
 }
