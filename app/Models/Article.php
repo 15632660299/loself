@@ -30,4 +30,8 @@ class Article extends Model implements Transformable
         });
     }
 
+    public function scopeByTitle(Builder $builder, $title)
+    {
+        return $builder->where('title', $title);
+    }
 }
