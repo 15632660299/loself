@@ -19,4 +19,9 @@ class Category extends Model implements Transformable
         'name', 'type'
     ];
 
+    public function isType($type)
+    {
+        return $this->type === $type;
+    }
+
 }

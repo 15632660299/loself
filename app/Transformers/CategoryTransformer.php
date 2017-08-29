@@ -33,6 +33,9 @@ class CategoryTransformer extends BaseTransformer
 
     public function includeArticles(Category $model)
     {
+        if ($model->isType('article')) {
+            return null;
+        }
         $articles = $model->getArticles();
         if ($articles->isNotEmpty()) {
             return $this->collection($articles, new ArticleTransformer());
