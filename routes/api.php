@@ -24,4 +24,9 @@ $api->version('v1', [
         $api->get('user', ['as' => 'user', 'uses' => 'UsersController@me']);
 
     });
+
+    $api->group(['prefix' => 'categories'], function (Router $api) {
+        $api->get('/', 'CategoriesController@index');
+        $api->get('/{id}', 'CategoriesController@show');
+    });
 });
