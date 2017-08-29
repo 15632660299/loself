@@ -26,6 +26,15 @@ $factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
 $factory->define(\App\Models\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->paragraph,
-        'type' => collect(['article'])->random(1)
+        'type' => collect(['article', 'course'])->random()
+    ];
+});
+
+$factory->define(\App\Models\Article::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->paragraph(1),
+        'summary' => $faker->paragraph(2),
+        'content' => $faker->paragraph(5),
+        'published_at' => \Carbon\Carbon::now(),
     ];
 });
