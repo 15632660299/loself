@@ -33,7 +33,7 @@ class CategoryTransformer extends BaseTransformer
 
     public function includeArticles(Category $model)
     {
-        if ($model->isType('article')) {
+        if (!$model->isType('article')) {
             return null;
         }
         $articles = $model->getArticles();
