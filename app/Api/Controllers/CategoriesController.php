@@ -4,11 +4,15 @@ namespace App\Api\Controllers;
 
 use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
+use App\Models\Article;
+use App\Models\Category;
+use App\Repositories\Interfaces\ArticleRepository;
 use App\Repositories\Interfaces\CategoryRepository;
 use App\Validators\CategoryValidator;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -122,5 +126,13 @@ class CategoriesController extends BaseController
             // Failed, throw exception
             throw new DeleteResourceFailedException();
         }
+    }
+
+    public function getArticlesViaCategory(ArticleRepository $articleRepository, $id)
+    {
+        $articles = Article::whereHas('categories',function (Builder $builder) use ($id) {
+            $builder->whereKey($id);
+        })->get();
+        return $articleRepository->present($articles);
     }
 }

@@ -27,6 +27,9 @@ $api->version('v1', [
 
     $api->group(['prefix' => 'categories'], function (Router $api) {
         $api->get('/', 'CategoriesController@index');
-        $api->get('/{id}', 'CategoriesController@show');
+        $api->group(['prefix' => '{id}'], function (Router $api) {
+            $api->get('/', 'CategoriesController@show');
+            $api->get('/articles', 'CategoriesController@getArticlesViaCategory');
+        });
     });
 });
