@@ -185,6 +185,7 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         App\Providers\RepositoryCommandServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\PolymorphicServiceProvider::class,
 
     ],
 
