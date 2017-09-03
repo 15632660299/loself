@@ -14,6 +14,9 @@ use App\Presenters\CategoryPresenter;
  */
 class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements CategoryRepository
 {
+    protected $fieldSearchable = [
+        'type' => '='
+    ];
     /**
      * Specify Model class name
      *

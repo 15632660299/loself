@@ -22,3 +22,19 @@ $factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(\App\Models\Category::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->paragraph,
+        'type' => collect(['article', 'article_tag'])->random()
+    ];
+});
+
+$factory->define(\App\Models\Article::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->paragraph(1),
+        'summary' => $faker->paragraph(2),
+        'content' => $faker->paragraph(5),
+        'published_at' => \Carbon\Carbon::now(),
+    ];
+});

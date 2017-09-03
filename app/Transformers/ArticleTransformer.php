@@ -24,6 +24,7 @@ class ArticleTransformer extends BaseTransformer
             'title' => (string)$model->title,
             'summary' => (string)$model->summary,
             'content' => (string)$model->content,
+            'published_at' => (string)$model->published_at,
             'created_at' => (string)$model->created_at,
             'updated_at' => (string)$model->updated_at
         ];
