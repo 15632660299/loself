@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseUserModel as Model;
-use App\Models\Traits\belongsToUser;
+use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\Transformable;
@@ -12,7 +12,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 class Student extends Model implements Transformable
 {
     use TransformableTrait, SoftDeletes;
-    use belongsToUser;
+    use BelongsToUser;
 
     protected $primaryKey = 'student_id';
 
