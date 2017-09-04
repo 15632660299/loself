@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Repositories\Eloquent\{
-    ArticleRepositoryEloquent, CategoryRepositoryEloquent, ClassRepositoryEloquent, StudentRepositoryEloquent, UserRepositoryEloquent
+    ArticleRepositoryEloquent, CategoryRepositoryEloquent, ClassRepositoryEloquent, StudentRepositoryEloquent, TeacherRepositoryEloquent, UserRepositoryEloquent
 };
 use App\Repositories\Interfaces\{
-    ArticleRepository, CategoryRepository, ClassRepository, StudentRepository, UserRepository
+    ArticleRepository, CategoryRepository, ClassRepository, StudentRepository, TeacherRepository, UserRepository
 };
 use Illuminate\Support\ServiceProvider;
 
@@ -34,6 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
         $this->app->bind(ArticleRepository::class, ArticleRepositoryEloquent::class);
         $this->app->bind(ClassRepository::class, ClassRepositoryEloquent::class);
+        $this->app->bind(TeacherRepository::class, TeacherRepositoryEloquent::class);
         //:end-bindings:
     }
 }
