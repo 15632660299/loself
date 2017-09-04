@@ -19,6 +19,7 @@ class CreateClassesTable extends Migration
             $table->string('year');
             $table->string('code');
             $table->unsignedInteger('teacher_id');
+            $table->boolean('active')->default(true);
 
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();

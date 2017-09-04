@@ -14,6 +14,10 @@ class ClassModel extends Model implements Transformable
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'year', 'code', 'teacher_id',
+        'year', 'code', 'teacher_id', 'active'
+    ];
+
+    protected $casts = [
+        'active' => 'boolean'
     ];
 }
