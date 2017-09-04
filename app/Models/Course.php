@@ -8,7 +8,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 
 class Course extends Model implements Transformable
 {
-    use TransformableTrait;
+    use TransformableTrait, SoftDeletes;
 
     protected $primaryKey = 'course_id';
 
