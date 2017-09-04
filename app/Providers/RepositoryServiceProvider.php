@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Repositories\Eloquent\{
-    ArticleRepositoryEloquent, CategoryRepositoryEloquent, ClassRepositoryEloquent, StudentRepositoryEloquent, TeacherRepositoryEloquent, UserRepositoryEloquent
+    ArticleRepositoryEloquent, CategoryRepositoryEloquent, ClassRepositoryEloquent, CourseRepositoryEloquent, ExaminationRepositoryEloquent, ExaminationTypeRepositoryEloquent, StudentRepositoryEloquent, TeacherRepositoryEloquent, UserRepositoryEloquent
 };
 use App\Repositories\Interfaces\{
-    ArticleRepository, CategoryRepository, ClassRepository, StudentRepository, TeacherRepository, UserRepository
+    ArticleRepository, CategoryRepository, ClassRepository, CourseRepository, ExaminationRepository, ExaminationTypeRepository, StudentRepository, TeacherRepository, UserRepository
 };
 use Illuminate\Support\ServiceProvider;
 
@@ -35,8 +35,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ArticleRepository::class, ArticleRepositoryEloquent::class);
         $this->app->bind(ClassRepository::class, ClassRepositoryEloquent::class);
         $this->app->bind(TeacherRepository::class, TeacherRepositoryEloquent::class);
-        $this->app->bind(\App\Repositories\Interfaces\CourseRepository::class, \App\Repositories\Eloquent\CourseRepositoryEloquent::class);
-        $this->app->bind(\App\Repositories\Interfaces\ExaminationRepository::class, \App\Repositories\Eloquent\ExaminationRepositoryEloquent::class);
+        $this->app->bind(CourseRepository::class, CourseRepositoryEloquent::class);
+        $this->app->bind(ExaminationRepository::class, ExaminationRepositoryEloquent::class);
+        $this->app->bind(ExaminationTypeRepository::class, ExaminationTypeRepositoryEloquent::class);
         //:end-bindings:
     }
 }
