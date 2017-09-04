@@ -48,7 +48,7 @@
 
 	<body>
 
-	
+
 		<div class="navbar navbar-default" id="navbar">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
@@ -126,32 +126,34 @@
 							<span class="btn btn-danger"></span>
 						</div>
 					</div><!-- #sidebar-shortcuts -->
-                    <ul class="nav nav-list">
+
+                   {{-- <ul class="nav nav-list">
 						<li>
 							<a href="#" class="dropdown-toggle">
 								<i class="icon-desktop"></i>
-								<span class="menu-text"> 功能目录 </span>
+								<span class="menu-text">  </span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
 
 							<ul class="submenu">
-								@foreach($tag_list as $k =>$v)
+								--}}{{--@foreach($tag_list[$k] as $value)
 								<li>
-									<a href="{{ $tag_list[$k]['tag_url']}}">
+									<a href="{{ $value['url']}}">
 										<i class="icon-double-angle-right"></i>
-										{{ $tag_list[$k]['tag_name']  }}
+										{{ $value['name']}}
 									</a>
 								</li>
 								@endforeach
-
+--}}{{--
 											</ul>
 										</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-					</ul><!-- /.nav-list -->
+					</ul><!-- /.nav-list -->--}}
+
 					<div class="sidebar-collapse" id="sidebar-collapse">
 						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 					</div>
@@ -206,9 +208,9 @@
 
 
 								<block name="page_content">
-									
+
 								</block>
-						
+
 
 
 								<!-- PAGE CONTENT ENDS -->
@@ -274,7 +276,7 @@
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
-		
+
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 
 		<!-- <![endif]-->
