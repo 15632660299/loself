@@ -54,6 +54,7 @@ class LoginController extends Controller
               $adminnav =  new Adminnav();
               $nav_list = $adminnav->get_child_tree(0);
               $nav_list = self::navList($nav_list);
+              session(['usernav'=>$nav_list]);
               return Redirect::to('welcome');
           }else{
               echo '返回';
@@ -71,7 +72,7 @@ class LoginController extends Controller
                $html.='<ul class="nav nav-list"><li><a href="#" class="dropdown-toggle"><i class="icon-desktop"></i><span class="menu-text">'.$nav_list[$k]['name'];
                $html.='</span><b class="arrow icon-angle-down"></b></a><ul class="submenu">';
                foreach ($nav_list[$k]['cat_id'] as $value){
-                   $html.='<li><a href="'.$value['url'].'"><i class="icon-double-angle-right"></i>'.$value['name'].'</li>';
+                   $html.='<li><a href="'.$value['url'].'"><i class="icon-double-angle-right"></i>'.$value['name'].'</li></a>';
                }
                $html.='</ul></li></ul></li></ul></li></ul>';
            }

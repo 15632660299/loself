@@ -6,7 +6,8 @@
        <meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+	    <link rel="stylesheet" href="{{ asset('adminframe/admin/welcome/css/amazeui.min.css') }}"/>
+	    <link rel="stylesheet" href="{{ asset('adminframe/admin/welcome/css/welcome.css') }}"/>
 		<!-- basic styles -->
 
 		<link href="{{ asset('adminframe/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -126,7 +127,7 @@
 							<span class="btn btn-danger"></span>
 						</div>
 					</div><!-- #sidebar-shortcuts -->
-
+                      {!!session::get('usernav')  !!}
                    {{-- <ul class="nav nav-list">
 						<li>
 							<a href="#" class="dropdown-toggle">
@@ -207,10 +208,8 @@
 								<!-- PAGE CONTENT BEGINS -->
 
 
-								<block name="page_content">
 
-								</block>
-
+							@yield('content')
 
 
 								<!-- PAGE CONTENT ENDS -->
@@ -273,6 +272,7 @@
 			</a>
 		</div><!-- /.main-container -->
 
+
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
@@ -318,5 +318,6 @@
 		<!-- inline scripts related to this page -->
 		<script src="{{ asset('adminframe/assets/js/jquery-ui-1.10.3.full.min.js') }}"></script>
 		<script src="{{ asset('adminframe/assets/js/jquery.ui.touch-punch.min.js') }}"></script>
-</body>
+		@yield('js')
+	</body>
 </html>
