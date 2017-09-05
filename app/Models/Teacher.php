@@ -5,23 +5,16 @@ namespace App\Models;
 use App\Models\Base\BaseUserModel as Model;
 use App\Models\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
-class Student extends Model implements Transformable
+class Teacher extends Model implements Transformable
 {
     use TransformableTrait, SoftDeletes;
     use BelongsToUser;
 
-    protected $primaryKey = 'student_id';
+    protected $primaryKey = 'teacher_id';
 
     protected $fillable = [];
 
-    public function scopeByUserName(Builder $query, $name)
-    {
-        return $query->whereHas('user', function (Builder $query) use ($name) {
-            $query->where('name', $name);
-        });
-    }
 }
