@@ -46,4 +46,13 @@ $api->version('v1', [
             $api->get('/articles', 'CategoriesController@getArticlesViaCategory');
         });
     });
+
+    $api->group(['prefix' => 'classes'], function (Router $api) {
+        $api->get('/', 'ClassesController@index');
+
+        $api->group(['prefix' => '{id}'], function (Router $api) {
+            $api->get('/', 'ClassesController@show');
+            $api->get('/users', 'ClassesController@getUsersByClassId');
+        });
+    });
 });

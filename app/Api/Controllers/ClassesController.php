@@ -5,6 +5,7 @@ namespace App\Api\Controllers;
 use App\Http\Requests\ClassCreateRequest;
 use App\Http\Requests\ClassUpdateRequest;
 use App\Repositories\Interfaces\ClassRepository;
+use App\Repositories\Interfaces\UserRepository;
 use App\Validators\ClassValidator;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
@@ -122,5 +123,10 @@ class ClassesController extends BaseController
             // Failed, throw exception
             throw new DeleteResourceFailedException();
         }
+    }
+
+    public function getUsersByClassId(UserRepository $userRepository, $class_id)
+    {
+        return $userRepository->getByClassId($class_id);
     }
 }

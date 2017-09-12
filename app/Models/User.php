@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\BaseUserModel;
+use Illuminate\Database\Eloquent\Builder;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Laravel\Passport\HasApiTokens;
@@ -36,4 +37,10 @@ class User extends BaseUserModel implements Transformable
         return $this->belongsToMany(ClassModel::class, 'classes_users', $this->getKeyName(), 'class_id');
     }
 
+    public function scopeByClassId(Builder $builder, $class_id)
+    {
+        return $builder->whereHas('classes', function (Builder $builder) use ($class_id) {
+            $builder->where('classes.class_id', '=', $class_id);
+        });
+    }
 }
