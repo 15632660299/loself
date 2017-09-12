@@ -53,4 +53,25 @@ class ArticleRepositoryEloquent extends BaseRepositoryEloquent implements Articl
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Add category id restriction
+     * @param $category_id
+     * @return $this
+     */
+    public function byCategoryId($category_id)
+    {
+        $this->model = $this->model->byCategoryId($category_id);
+        return $this;
+    }
+
+    /**
+     * Get all article by category id
+     * @param $category_id
+     * @return array
+     */
+    public function getByCategoryId($category_id)
+    {
+        return $this->byCategoryId($category_id)->all();
+    }
 }

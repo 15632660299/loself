@@ -43,7 +43,7 @@ $api->version('v1', [
         $api->get('/', 'CategoriesController@index');
         $api->group(['prefix' => '{id}'], function (Router $api) {
             $api->get('/', 'CategoriesController@show');
-            $api->get('/articles', 'CategoriesController@getArticlesViaCategory');
+            $api->get('/articles', 'CategoriesController@getArticlesByCategoryId');
         });
     });
 

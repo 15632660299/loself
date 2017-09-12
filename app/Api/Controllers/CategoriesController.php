@@ -128,12 +128,9 @@ class CategoriesController extends BaseController
         }
     }
 
-    public function getArticlesViaCategory(ArticleRepository $articleRepository, Request $request, $id)
+    public function getArticlesByCategoryId(ArticleRepository $articleRepository, Request $request, $category_id)
     {
         $per_page = $request->get('per_page');
-        $articles = Article::whereHas('categories',function (Builder $builder) use ($id) {
-            $builder->whereKey($id);
-        })->paginate($per_page);
-        return $articleRepository->present($articles);
+        return $articleRepository->byCategoryId($category_id)->paginate($per_page);
     }
 }
