@@ -21,7 +21,11 @@ $api->version('v1', [
 
     $api->group(['middleware' => ['auth:api']], function (Router $api) {
 
-        $api->get('user', ['as' => 'user', 'uses' => 'UsersController@me']);
+        $api->group(['prefix' => 'user'], function (Router $api) {
+            $api->get('/', 'UsersController@me');
+            $api->get('/classes', 'UsersController@getClassesByAuthUser');
+            $api->get('/classes/activated', 'UsersController@getActivatedClassByAuthUser');
+        });
 
     });
 

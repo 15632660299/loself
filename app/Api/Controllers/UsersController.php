@@ -5,6 +5,7 @@ namespace App\Api\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Presenters\BasicPresenter;
+use App\Repositories\Interfaces\ClassRepository;
 use App\Repositories\Interfaces\UserRepository;
 use App\Validators\UserValidator;
 use Dingo\Api\Exception\DeleteResourceFailedException;
@@ -128,5 +129,25 @@ class UsersController extends BaseController
             // Failed, throw exception
             throw new DeleteResourceFailedException();
         }
+    }
+
+    public function getClassesByUserId(ClassRepository $classRepository, $user_id)
+    {
+        return $classRepository->byUserId($user_id)->all();
+    }
+
+    public function getClassesByAuthUser(ClassRepository $classRepository)
+    {
+        return $this->getClassesByUserId($classRepository, \Auth::id());
+    }
+
+    public function getActivatedClassByUserId(ClassRepository $classRepository, $user_id)
+    {
+        return $classRepository->findActivatedByUserId($user_id);
+    }
+
+    public function getActivatedClassByAuthUser(ClassRepository $classRepository)
+    {
+        return $this->getActivatedClassByUserId($classRepository, \Auth::id());
     }
 }
