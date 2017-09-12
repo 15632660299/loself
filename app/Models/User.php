@@ -31,4 +31,9 @@ class User extends BaseUserModel implements Transformable
         'password', 'remember_token',
     ];
 
+    public function classes()
+    {
+        return $this->belongsToMany(ClassModel::class, 'classes_users', $this->getKeyName(), 'class_id');
+    }
+
 }

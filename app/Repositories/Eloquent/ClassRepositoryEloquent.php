@@ -53,4 +53,45 @@ class ClassRepositoryEloquent extends BaseRepositoryEloquent implements ClassRep
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    /**
+     * Add user id restriction
+     * @param $user_id
+     * @return $this
+     */
+    public function byUserId($user_id)
+    {
+        $this->model = $this->model->byUserId($user_id);
+        return $this;
+    }
+
+    /**
+     * Must activated
+     * @return $this
+     */
+    public function activated()
+    {
+        $this->model = $this->model->activated();
+        return $this;
+    }
+
+    /**
+     * Get all class by user id
+     * @param $user_id
+     * @return array
+     */
+    public function getByUserId($user_id)
+    {
+        return $this->byUserId($user_id)->all();
+    }
+
+    /**
+     * Find activated class by user id
+     * @param $user_id
+     * @return mixed
+     */
+    public function findActivatedByUserId($user_id)
+    {
+        return $this->activated()->byUserId($user_id)->first();
+    }
 }
