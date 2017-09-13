@@ -24,23 +24,6 @@ class ClassModel extends Model implements Transformable
         'is_active' => 'boolean'
     ];
 
-    public function users()
-    {
-        return $this->belongsToMany(
-            User::class,
-            'classes_users',
-            $this->getKeyName(),
-            'user_id'
-        );
-    }
-
-    public function scopeByUserId(Builder $builder, $user_id)
-    {
-        return $builder->whereHas('users', function (Builder $builder) use ($user_id) {
-            $builder->where('users.user_id', '=', $user_id);
-        });
-    }
-
     public function scopeActivated(Builder $builder)
     {
         return $builder->where('is_active', '=', true);
