@@ -10,6 +10,9 @@ use App\Models\Student;
  */
 class StudentTransformer extends BaseTransformer
 {
+    protected $availableIncludes = [
+        'user'
+    ];
 
     /**
      * Transform the Student entity
@@ -24,5 +27,14 @@ class StudentTransformer extends BaseTransformer
             'user_id' => (int)$model->user_id,
             'created_at' => (string)$model->created_at,
         ];
+    }
+
+    public function includeUser(Student $model)
+    {
+        $user = $model->user;
+        if ($user) {
+            return $this->item($user, new UserTransformer());
+        }
+        return null;
     }
 }
