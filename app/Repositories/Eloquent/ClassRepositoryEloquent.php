@@ -56,11 +56,46 @@ class ClassRepositoryEloquent extends BaseRepositoryEloquent implements ClassRep
 
     /**
      * Must activated
+     *
      * @return $this
      */
     public function activated()
     {
         $this->model = $this->model->activated();
         return $this;
+    }
+
+    /**
+     * Add student id restriction
+     *
+     * @param $student_id
+     * @return $this
+     */
+    public function byStudentId($student_id)
+    {
+        $this->model = $this->model->byStudentId($student_id);
+        return $this;
+    }
+
+    /**
+     * Get all class by student id
+     *
+     * @param $student_id
+     * @return array
+     */
+    public function getByStudentId($student_id)
+    {
+        return $this->byStudentId($student_id)->all();
+    }
+
+    /**
+     * Find activated class by student id
+     *
+     * @param $student_id
+     * @return mixed
+     */
+    public function findActivatedByStudentId($student_id)
+    {
+        return $this->activated()->byStudentId($student_id)->first();
     }
 }
