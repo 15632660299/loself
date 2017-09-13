@@ -19,6 +19,15 @@ class Student extends Model implements Transformable
 
     protected $fillable = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('with_user', function (Builder $builder) {
+            return $builder->with('user');
+        });
+    }
+
     public function scopeByUserName(Builder $query, $name)
     {
         return $query->whereHas('user', function (Builder $query) use ($name) {
