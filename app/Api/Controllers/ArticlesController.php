@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-
-
 class ArticlesController extends BaseController
 {
 
