@@ -11,9 +11,6 @@ use App\Repositories\Interfaces\ClassRepository;
  */
 class ClassTransformer extends BaseTransformer
 {
-    protected $availableIncludes = [
-        'users'
-    ];
 
     /**
      * Transform the Class entity
@@ -30,14 +27,5 @@ class ClassTransformer extends BaseTransformer
             'created_at' => (string)$model->created_at,
             'updated_at' => (string)$model->updated_at
         ];
-    }
-
-    public function includeUsers(ClassModel $model)
-    {
-        $users = $model->users;
-        if ($users->isNotEmpty()) {
-            return $this->collection($users, new UserTransformer());
-        }
-        return null;
     }
 }

@@ -10,9 +10,6 @@ use App\Models\User;
  */
 class UserTransformer extends BaseTransformer
 {
-    protected $availableIncludes = [
-        'classes'
-    ];
 
     /**
      * Transform the User entity
@@ -28,14 +25,5 @@ class UserTransformer extends BaseTransformer
             'email' => (string)$model->email,
             'created_at' => (string)$model->created_at,
         ];
-    }
-
-    public function includeClasses(User $model)
-    {
-        $classes = $model->classes;
-        if ($classes->isNotEmpty()) {
-            return $this->collection($classes, new ClassTransformer());
-        }
-        return null;
     }
 }
