@@ -29,6 +29,16 @@ $api->version('v1', [
 
     });
 
+    $api->group(['prefix' => 'students'], function (Router $api) {
+        $api->get('/', 'StudentsController@index');
+
+        $api->group(['prefix' => '{id}'], function (Router $api) {
+            $api->get('/', 'StudentsController@show');
+            $api->get('/classes', 'StudentsController@getClassesByStudentId');
+            $api->get('/activated_class', 'StudentsController@getActivatedClassByStudentId');
+        });
+    });
+
     $api->group(['prefix' => 'categories'], function (Router $api) {
         $api->get('/', 'CategoriesController@index');
         $api->group(['prefix' => '{id}'], function (Router $api) {
