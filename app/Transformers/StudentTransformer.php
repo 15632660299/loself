@@ -10,6 +10,9 @@ use App\Models\Student;
  */
 class StudentTransformer extends BaseTransformer
 {
+    protected $defaultIncludes = [
+        'user'
+    ];
     protected $availableIncludes = [
         'user'
     ];
