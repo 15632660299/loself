@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\ClassModel;
+use App\Models\Teacher;
 use App\Repositories\Interfaces\ClassRepository;
 
 /**
@@ -11,6 +12,9 @@ use App\Repositories\Interfaces\ClassRepository;
  */
 class ClassTransformer extends BaseTransformer
 {
+    protected $availableIncludes = [
+        'teacher'
+    ];
 
     /**
      * Transform the Class entity
@@ -27,5 +31,14 @@ class ClassTransformer extends BaseTransformer
             'created_at' => (string)$model->created_at,
             'updated_at' => (string)$model->updated_at
         ];
+    }
+
+    public function includeTeacher(ClassModel $model)
+    {
+        $teacher = $model->getTeacher();
+        if ($teacher instanceof Teacher) {
+            return $this->item($teacher, new TeacherTransformer());
+        }
+        return null;
     }
 }

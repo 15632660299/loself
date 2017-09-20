@@ -24,6 +24,16 @@ class ClassModel extends Model implements Transformable
         'is_active' => 'boolean'
     ];
 
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id', 'teacher_id');
+    }
+
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+
     public function students()
     {
         return $this->belongsToMany(
