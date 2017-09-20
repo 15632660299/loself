@@ -15,6 +15,8 @@ class Teacher extends Model implements Transformable
 
     protected $primaryKey = 'teacher_id';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'user_id'
+    ];
 
 }
