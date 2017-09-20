@@ -28,6 +28,18 @@ class Student extends Model implements Transformable
         });
     }
 
+    public function classes()
+    {
+        return $this->belongsToMany(ClassModel::class, 'classes_students', $this->getKeyName(), 'class_id');
+    }
+
+    public function scopeByClassId(Builder $builder, $class_id)
+    {
+        return $builder->whereHas('classes', function (Builder $builder) use ($class_id) {
+            $builder->where('classes.class_id', '=', $class_id);
+        });
+    }
+
     public function scopeByUserName(Builder $query, $name)
     {
         return $query->whereHas('user', function (Builder $query) use ($name) {
