@@ -31,16 +31,4 @@ class User extends BaseUserModel implements Transformable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function classes()
-    {
-        return $this->belongsToMany(ClassModel::class, 'classes_users', $this->getKeyName(), 'class_id');
-    }
-
-    public function scopeByClassId(Builder $builder, $class_id)
-    {
-        return $builder->whereHas('classes', function (Builder $builder) use ($class_id) {
-            $builder->where('classes.class_id', '=', $class_id);
-        });
-    }
 }

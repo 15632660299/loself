@@ -52,7 +52,6 @@ $api->version('v1', [
 
         $api->group(['prefix' => '{id}'], function (Router $api) {
             $api->get('/', 'ClassesController@show');
-            $api->get('/users', 'ClassesController@getUsersByClassId');
         });
     });
 });
